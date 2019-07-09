@@ -1,8 +1,35 @@
 import React, { Component } from "react";
 
+import Checkbox from "./Checkbox";
+
 class TodoItem extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isChecked: false,
+      todoText: "This is a test"
+    };
+
+    this.handleCheck = this.handleCheck.bind(this);
+  }
+
+  handleCheck() {
+    this.setState(state => {
+      return { isChecked: !state.isChecked };
+    });
+  }
+
   render() {
-    return <p>Kick a child</p>;
+    return (
+      <label>
+        <Checkbox
+          isChecked={this.state.isChecked}
+          onChange={this.handleCheck}
+        />
+        <span>{this.state.todoText}</span>
+      </label>
+    );
   }
 }
 
