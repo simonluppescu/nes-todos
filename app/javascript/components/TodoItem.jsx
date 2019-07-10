@@ -22,7 +22,7 @@ class TodoItem extends Component {
 
   render() {
     return (
-      <label>
+      <label className="one-todo">
         <Checkbox
           isChecked={this.state.isChecked}
           onChange={this.handleCheck}
