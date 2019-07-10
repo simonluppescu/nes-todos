@@ -1,11 +1,15 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
 
 import TodoList from "./TodoList";
+import Container from "react-bootstrap/Container";
 
 class App extends React.Component {
   render() {
-    return <TodoList />;
+    return (
+      <Container>
+        <TodoList />
+      </Container>
+    );
   }
 }
 
