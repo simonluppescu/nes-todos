@@ -8,7 +8,7 @@ class TodoItem extends Component {
 
     this.state = {
       isChecked: false,
-      todoText: "This is a test"
+      todoText: "This test"
     };
 
     this.handleCheck = this.handleCheck.bind(this);

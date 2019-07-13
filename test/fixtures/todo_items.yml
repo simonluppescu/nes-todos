@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  is_checked: false
+  value: MyText
+  todo_list: one
+
+two:
+  is_checked: false
+  value: MyText
+  todo_list: two

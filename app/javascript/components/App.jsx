@@ -1,17 +1,15 @@
 import React from "react";
 
-import TodoList from "./TodoList";
-import Container from "react-bootstrap/Container";
+import Bootstrap from "react-bootstrap";
 import MainNav from "./MainNav";
+import MainContent from "./MainContent";
 
 class App extends React.Component {
   render() {
     return (
       <React.Fragment>
         <MainNav />
-        <Container>
-          <TodoList />
-        </Container>
+        <MainContent />
       </React.Fragment>
     );
   }
