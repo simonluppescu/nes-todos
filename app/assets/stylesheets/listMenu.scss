@@ -1,0 +1,16 @@
+.list-menu {
+  list-style-type: none;
+  padding-left: 0;
+
+  li {
+    padding: 10px;
+  }
+
+  .arrow-indicator {
+    visibility: hidden;
+  }
+
+  li:hover .arrow-indicator {
+    visibility: visible;
+  }
+}

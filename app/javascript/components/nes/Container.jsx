@@ -1,10 +1,12 @@
 import React from "react";
 
 const Container = props => {
+  const classNames = ["nes-container"];
+  if (props.className) classNames.push(props.className);
+  if (props.title) classNames.push("with-title");
+
   return (
-    <div
-      className={`nes-container ${props.className || ""} ${props.title &&
-        "with-title"}`}>
+    <div className={classNames.join(" ")}>
       {props.title && <p className="title">{props.title}</p>}
 
       {props.children}
