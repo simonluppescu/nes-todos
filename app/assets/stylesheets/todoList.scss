@@ -2,6 +2,21 @@
   margin-top: 15px;
 }
 
+.todo-list-title {
+  .edit-title {
+    color: black;
+    visibility: hidden;
+  }
+
+  &:hover {
+    color: #888;
+
+    .edit-title {
+      visibility: visible;
+    }
+  }
+}
+
 .one-todo {
   font-size: 18px;
 }
@@ -19,4 +34,8 @@
     right: 10%;
     font-size: 26px;
   }
+}
+
+.edit-title-form {
+  display: flex;
 }

@@ -15,10 +15,25 @@ class MainContent extends Component {
     this.createTodoList = this.createTodoList.bind(this);
   }
 
+  componentDidMount() {
+    fetch("/api/v1/todo_lists.json", {
+      method: "GET",
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      }
+    })
+      .then(response => response.json())
+      .then(json => {
+        this.setState({
+          todoLists: json.map(item => ({ id: item.id, title: item.title }))
+        });
+      });
+  }
+
   createTodoList() {
     fetch("/api/v1/todo_lists", {
       method: "POST",
-      body: JSON.stringify({ todo_list: { title: "Example Title" } }),
+      body: JSON.stringify({ todo_list: { title: "Set title" } }),
       headers: {
         "Content-type": "application/json; charset=UTF-8"
       }
