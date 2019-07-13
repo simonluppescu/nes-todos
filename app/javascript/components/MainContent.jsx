@@ -1,17 +1,14 @@
-import React, { Component } from "react";
+import React from "react";
 
-import * as BSContainer from "react-bootstrap/Container";
+import * as BootstrapContainer from "react-bootstrap/Container";
 import AddEntity from "./AddEntity";
 
-class MainContent extends Component {
-  state = {};
-  render() {
-    return (
-      <BSContainer>
-        <AddEntity />
-      </BSContainer>
-    );
-  }
-}
+const MainContent = () => {
+  return (
+    <BootstrapContainer>
+      <AddEntity />
+    </BootstrapContainer>
+  );
+};
 
 export default MainContent;
