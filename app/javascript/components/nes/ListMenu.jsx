@@ -3,10 +3,10 @@ import React from "react";
 const ListMenu = props => {
   return (
     <ul className="list-menu">
-      {props.items.map((item, index) => (
-        <li key={index}>
+      {props.items.map((itemHash, index) => (
+        <li key={index} className="nes-pointer" onClick={itemHash.action}>
           <span className="arrow-indicator">></span>
-          {item}
+          {itemHash.text}
         </li>
       ))}
     </ul>

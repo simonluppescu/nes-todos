@@ -25,7 +25,12 @@ class AddEntity extends Component {
     if (this.state.isActive) {
       listMenu = (
         <Container className="is-rounded list-menu-container">
-          <ListMenu items={["Create List", "Create Item"]} />
+          <ListMenu
+            items={[
+              { text: "Create List", action: this.props.createList },
+              { text: "Create Item", action: this.props.createItem }
+            ]}
+          />
         </Container>
       );
     }
