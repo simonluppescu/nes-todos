@@ -1,6 +1,5 @@
 import React from "react";
 
-import Bootstrap from "react-bootstrap";
 import MainNav from "./MainNav";
 import MainContent from "./MainContent";
 

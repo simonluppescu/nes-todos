@@ -1,11 +1,16 @@
 import React, { Component } from "react";
 
-import { Container as BootstrapContainer } from "react-bootstrap";
+import * as BSContainer from "react-bootstrap/Container";
+import AddEntity from "./AddEntity";
 
 class MainContent extends Component {
   state = {};
   render() {
-    return <BootstrapContainer>hi</BootstrapContainer>;
+    return (
+      <BSContainer>
+        <AddEntity />
+      </BSContainer>
+    );
   }
 }
 

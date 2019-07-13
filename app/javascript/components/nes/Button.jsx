@@ -5,7 +5,7 @@ const Button = props => {
     <button
       onClick={props.onClick}
       type="button"
-      className={`nes-btn is-${props.variant}`}>
+      className={`nes-btn nes-pointer is-${props.variant} ${props.className || ""}`}>
       {props.children}
     </button>
   );

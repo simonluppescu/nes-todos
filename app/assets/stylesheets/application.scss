@@ -1,0 +1,5 @@
+// This is a custom bootstrap file with only Grid system and responsive utilities.
+// This is to avoid conflicts with NES css.
+@import "../../../vendor/stylesheets/custom_bootstrap.min.scss";
+
+@import "*";
