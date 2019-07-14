@@ -56,7 +56,11 @@ class MainContent extends Component {
       <BootstrapContainer>
         <div id="todo-lists-container">
           {this.state.todoLists.map(todoList => (
-            <TodoList key={todoList.id} title={todoList.title} />
+            <TodoList
+              key={todoList.id}
+              id={todoList.id}
+              title={todoList.title}
+            />
           ))}
         </div>
         <AddEntity createList={this.createTodoList} />

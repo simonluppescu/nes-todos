@@ -14,7 +14,7 @@ class Api::V1::TodoListsController < Api::V1::BaseController
   def update
     todo_list = TodoList.find(params[:id])
     todo_list.update_attributes(todo_list_params)
-    respond_with todo_list
+    respond_with todo_list, json: todo_list
   end
 
   def destroy
