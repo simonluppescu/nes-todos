@@ -7,8 +7,8 @@ class TodoItem extends Component {
     super(props);
 
     this.state = {
-      isChecked: false,
-      todoText: "New task"
+      isChecked: props.isChecked,
+      value: props.value
     };
 
     this.handleCheck = this.handleCheck.bind(this);
@@ -27,7 +27,7 @@ class TodoItem extends Component {
           isChecked={this.state.isChecked}
           onChange={this.handleCheck}
         />
-        <span>{this.state.todoText}</span>
+        <span>{this.state.value}</span>
       </label>
     );
   }

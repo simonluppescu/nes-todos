@@ -10,7 +10,11 @@ class TodoList extends Component {
     super(props);
 
     this.state = {
-      todoItems: []
+      todoItems: props.todoItems.map(item => ({
+        id: item.id,
+        isChecked: item.is_checked,
+        value: item.value
+      }))
     };
 
     this.addTodoItem = this.addTodoItem.bind(this);
@@ -46,7 +50,7 @@ class TodoList extends Component {
           {this.state.todoItems.map(itemHash => (
             <TodoItem
               key={itemHash.id}
-              todoText={itemHash.value}
+              value={itemHash.value}
               isChecked={itemHash.isChecked}
             />
           ))}

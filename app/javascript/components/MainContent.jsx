@@ -21,7 +21,11 @@ class MainContent extends Component {
       method: "GET",
       success: json => {
         this.setState({
-          todoLists: json.map(item => ({ id: item.id, title: item.title }))
+          todoLists: json.map(item => ({
+            id: item.id,
+            title: item.title,
+            todoItems: item.todo_items
+          }))
         });
       }
     });
@@ -54,6 +58,7 @@ class MainContent extends Component {
               key={todoList.id}
               id={todoList.id}
               title={todoList.title}
+              todoItems={todoList.todoItems}
             />
           ))}
         </div>
