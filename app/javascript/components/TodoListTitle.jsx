@@ -59,17 +59,14 @@ class TodoListTitle extends Component {
   saveTitle() {
     this.toggleEditTitle();
 
-    fetch(`/api/v1/todo_lists/${this.props.todoListId}`, {
+    $.ajax({
+      url: `/api/v1/todo_lists/${this.props.todoListId}`,
       method: "PUT",
-      body: JSON.stringify({ todo_list: { title: this.state.title } }),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8"
+      data: { todo_list: { title: this.state.title } },
+      success: json => {
+        console.log(json);
       }
-    })
-      .then(response => response.json())
-      .then(json => {
-        console.log("Saved");
-      });
+    });
   }
 
   render() {

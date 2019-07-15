@@ -16,30 +16,23 @@ class MainContent extends Component {
   }
 
   componentDidMount() {
-    fetch("/api/v1/todo_lists.json", {
+    $.ajax({
+      url: "/api/v1/todo_lists.json",
       method: "GET",
-      headers: {
-        "Content-type": "application/json; charset=UTF-8"
-      }
-    })
-      .then(response => response.json())
-      .then(json => {
+      success: json => {
         this.setState({
           todoLists: json.map(item => ({ id: item.id, title: item.title }))
         });
-      });
+      }
+    });
   }
 
   createTodoList() {
-    fetch("/api/v1/todo_lists", {
+    $.ajax({
+      url: "/api/v1/todo_lists",
       method: "POST",
-      body: JSON.stringify({ todo_list: { title: "Set title" } }),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8"
-      }
-    })
-      .then(response => response.json())
-      .then(json => {
+      data: { todo_list: { title: "Set title" } },
+      success: json => {
         this.setState(state => {
           const newTodoLists = [
             ...state.todoLists,
@@ -48,7 +41,8 @@ class MainContent extends Component {
 
           return { todoLists: newTodoLists };
         });
-      });
+      }
+    });
   }
 
   render() {
