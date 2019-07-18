@@ -20,7 +20,11 @@ class TodoList extends Component {
     const { todoItems } = this.props;
     return (
       <Container className="todo-list-container is-rounded">
-        <TodoListTitle todoListId={this.props.id} title={this.props.title} />
+        <TodoListTitle
+          todoListId={this.props.id}
+          title={this.props.title}
+          handleSaveTitle={this.props.handleSaveTitle}
+        />
         <div className="todo-list">
           {Object.keys(todoItems).map(todoItemId => (
             <TodoItem

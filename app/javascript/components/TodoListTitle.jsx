@@ -7,17 +7,23 @@ class TodoListTitle extends Component {
     super(props);
 
     this.state = {
-      title: props.title,
-      isEditTitle: false
+      isEditTitle: false,
+      inputValue: props.title
     };
 
-    this.bindMethods();
+    this.toggleEditTitle = this.toggleEditTitle.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.saveTitle = this.saveTitle.bind(this);
   }
 
-  bindMethods() {
-    this.handleTitleEdit = this.handleTitleEdit.bind(this);
-    this.toggleEditTitle = this.toggleEditTitle.bind(this);
-    this.saveTitle = this.saveTitle.bind(this);
+  toggleEditTitle() {
+    this.setState(state => {
+      return { isEditTitle: !state.isEditTitle };
+    });
+  }
+
+  handleInputChange(event) {
+    this.setState({ inputValue: event.target.value });
   }
 
   getTitleElement() {
@@ -28,8 +34,8 @@ class TodoListTitle extends Component {
           <input
             type="text"
             className="nes-input"
-            value={this.state.title}
-            onChange={this.handleTitleEdit}
+            value={this.state.inputValue}
+            onChange={this.handleInputChange}
           />
           <Button variant="success" onClick={this.saveTitle}>
             Save
@@ -39,34 +45,17 @@ class TodoListTitle extends Component {
     } else {
       titleElement = (
         <h2 className="todo-list-title" onClick={this.toggleEditTitle}>
-          {this.state.title} <span className="edit-title">Edit</span>
+          {this.props.title} <span className="edit-title">Edit</span>
         </h2>
       );
     }
     return titleElement;
   }
 
-  handleTitleEdit(event) {
-    this.setState({ title: event.target.value });
-  }
-
-  toggleEditTitle() {
-    this.setState(state => {
-      return { isEditTitle: !state.isEditTitle };
-    });
-  }
-
-  saveTitle() {
+  saveTitle(event) {
     this.toggleEditTitle();
 
-    $.ajax({
-      url: `/api/v1/todo_lists/${this.props.todoListId}`,
-      method: "PUT",
-      data: { todo_list: { title: this.state.title } },
-      success: json => {
-        console.log(json);
-      }
-    });
+    this.props.handleSaveTitle(this.props.todoListId, this.state.inputValue);
   }
 
   render() {

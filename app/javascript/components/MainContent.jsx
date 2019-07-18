@@ -15,6 +15,7 @@ class MainContent extends Component {
 
     this.createTodoList = this.createTodoList.bind(this);
     this.createTodoItem = this.createTodoItem.bind(this);
+    this.editTitle = this.editTitle.bind(this);
   }
 
   componentDidMount() {
@@ -77,6 +78,22 @@ class MainContent extends Component {
     });
   }
 
+  editTitle(todoListId, newTitle) {
+    $.ajax({
+      url: `/api/v1/todo_lists/${todoListId}`,
+      method: "PUT",
+      data: { todo_list: { title: newTitle } },
+      success: json => {
+        this.setState(state => {
+          const newTodoLists = cloneDeep(state.todoLists);
+          newTodoLists[todoListId].title = newTitle;
+
+          return { todoLists: newTodoLists };
+        });
+      }
+    });
+  }
+
   render() {
     const { todoLists } = this.state;
     return (
@@ -89,6 +106,7 @@ class MainContent extends Component {
               title={todoLists[todoListId].title}
               todoItems={todoLists[todoListId].todoItems}
               handleAddTodoItem={this.createTodoItem}
+              handleSaveTitle={this.editTitle}
             />
           ))}
         </div>
