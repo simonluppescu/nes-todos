@@ -6,11 +6,6 @@ class TodoItem extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      isChecked: props.isChecked,
-      value: props.value
-    };
-
     this.handleCheck = this.handleCheck.bind(this);
   }
 
@@ -24,10 +19,10 @@ class TodoItem extends Component {
     return (
       <label className="one-todo">
         <Checkbox
-          isChecked={this.state.isChecked}
+          isChecked={this.props.isChecked}
           onChange={this.handleCheck}
         />
-        <span>{this.state.value}</span>
+        <span>{this.props.value}</span>
       </label>
     );
   }

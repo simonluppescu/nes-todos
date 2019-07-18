@@ -9,53 +9,29 @@ class TodoList extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      todoItems: props.todoItems.map(item => ({
-        id: item.id,
-        isChecked: item.is_checked,
-        value: item.value
-      }))
-    };
-
-    this.addTodoItem = this.addTodoItem.bind(this);
+    this.handleAddTodoItem = this.handleAddTodoItem.bind(this);
   }
 
-  addTodoItem() {
-    $.ajax({
-      url: `/api/v1/todo_lists/${this.props.id}/todo_items`,
-      method: "POST",
-      data: { todo_item: { value: "New task", is_checked: false } },
-      success: json => {
-        this.setState(state => {
-          const newTodoItems = [
-            ...state.todoItems,
-            {
-              id: json.id,
-              value: json.value,
-              isChecked: json.is_checked
-            }
-          ];
-
-          return { todoItems: newTodoItems };
-        });
-      }
-    });
+  handleAddTodoItem() {
+    this.props.handleAddTodoItem(this.props.id);
   }
 
   render() {
+    const { todoItems } = this.props;
     return (
       <Container className="todo-list-container is-rounded">
         <TodoListTitle todoListId={this.props.id} title={this.props.title} />
         <div className="todo-list">
-          {this.state.todoItems.map(itemHash => (
+          {Object.keys(todoItems).map(todoItemId => (
             <TodoItem
-              key={itemHash.id}
-              value={itemHash.value}
-              isChecked={itemHash.isChecked}
+              key={todoItemId}
+              id={todoItemId}
+              value={todoItems[todoItemId].value}
+              isChecked={todoItems[todoItemId].isChecked}
             />
           ))}
         </div>
-        <Button variant="success" onClick={this.addTodoItem}>
+        <Button variant="success" onClick={this.handleAddTodoItem}>
           Add Todo
         </Button>
       </Container>

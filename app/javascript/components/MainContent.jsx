@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-
 import * as BootstrapContainer from "react-bootstrap/Container";
+import cloneDeep from "clone-deep";
+
 import AddEntity from "./AddEntity";
 import TodoList from "./TodoList";
 
@@ -9,10 +10,11 @@ class MainContent extends Component {
     super(props);
 
     this.state = {
-      todoLists: []
+      todoLists: {}
     };
 
     this.createTodoList = this.createTodoList.bind(this);
+    this.createTodoItem = this.createTodoItem.bind(this);
   }
 
   componentDidMount() {
@@ -20,13 +22,17 @@ class MainContent extends Component {
       url: "/api/v1/todo_lists.json",
       method: "GET",
       success: json => {
-        this.setState({
-          todoLists: json.map(item => ({
-            id: item.id,
-            title: item.title,
-            todoItems: item.todo_items
-          }))
+        const newTodoLists = {};
+        json.forEach(todoList => {
+          const newTodoItems = {};
+          todoList.todo_items.forEach(todoItem => {
+            newTodoItems[todoItem.id] = todoItem;
+          });
+          todoList.todoItems = newTodoItems;
+
+          newTodoLists[todoList.id] = todoList;
         });
+        this.setState({ todoLists: newTodoLists });
       }
     });
   }
@@ -35,13 +41,14 @@ class MainContent extends Component {
     $.ajax({
       url: "/api/v1/todo_lists",
       method: "POST",
-      data: { todo_list: { title: "Set title" } },
       success: json => {
         this.setState(state => {
-          const newTodoLists = [
-            ...state.todoLists,
-            { id: json.id, title: json.title }
-          ];
+          const newTodoLists = cloneDeep(state.todoLists);
+          newTodoLists[json.id] = {
+            id: json.id,
+            title: json.title,
+            todoItems: {}
+          };
 
           return { todoLists: newTodoLists };
         });
@@ -49,16 +56,39 @@ class MainContent extends Component {
     });
   }
 
+  createTodoItem(todoListId) {
+    $.ajax({
+      url: `/api/v1/todo_lists/${todoListId}/todo_items`,
+      method: "POST",
+      success: json => {
+        this.setState(state => {
+          const newTodoItems = [
+            ...state.todoItems,
+            {
+              id: json.id,
+              value: json.value,
+              isChecked: json.is_checked
+            }
+          ];
+
+          return { todoItems: newTodoItems };
+        });
+      }
+    });
+  }
+
   render() {
+    const { todoLists } = this.state;
     return (
       <BootstrapContainer>
         <div id="todo-lists-container">
-          {this.state.todoLists.map(todoList => (
+          {Object.keys(todoLists).map(todoListId => (
             <TodoList
-              key={todoList.id}
-              id={todoList.id}
-              title={todoList.title}
-              todoItems={todoList.todoItems}
+              key={todoListId}
+              id={todoListId}
+              title={todoLists[todoListId].title}
+              todoItems={todoLists[todoListId].todoItems}
+              handleAddTodoItem={this.createTodoItem}
             />
           ))}
         </div>

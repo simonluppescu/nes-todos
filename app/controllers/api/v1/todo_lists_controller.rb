@@ -8,7 +8,7 @@ class Api::V1::TodoListsController < Api::V1::BaseController
   end
 
   def create
-    respond_with :api, :v1, TodoList.create(todo_list_params)
+    respond_with :api, :v1, TodoList.create(title: 'New Todo List')
   end
 
   def update
