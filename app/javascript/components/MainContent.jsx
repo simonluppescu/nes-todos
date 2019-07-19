@@ -79,17 +79,18 @@ class MainContent extends Component {
   }
 
   editTitle(todoListId, newTitle) {
+    this.setState(state => {
+      const newTodoLists = cloneDeep(state.todoLists);
+      newTodoLists[todoListId].title = newTitle;
+
+      return { todoLists: newTodoLists };
+    });
     $.ajax({
       url: `/api/v1/todo_lists/${todoListId}`,
       method: "PUT",
       data: { todo_list: { title: newTitle } },
       success: json => {
-        this.setState(state => {
-          const newTodoLists = cloneDeep(state.todoLists);
-          newTodoLists[todoListId].title = newTitle;
-
-          return { todoLists: newTodoLists };
-        });
+        console.log(`Saved title for todoList[${todoListId}] to ${newTitle}`);
       }
     });
   }
