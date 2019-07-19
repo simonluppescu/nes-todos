@@ -16,6 +16,7 @@ class MainContent extends Component {
     this.createTodoList = this.createTodoList.bind(this);
     this.createTodoItem = this.createTodoItem.bind(this);
     this.editTitle = this.editTitle.bind(this);
+    this.toggleCheckTodoItem = this.toggleCheckTodoItem.bind(this);
   }
 
   componentDidMount() {
@@ -27,7 +28,11 @@ class MainContent extends Component {
         json.forEach(todoList => {
           const newTodoItems = {};
           todoList.todo_items.forEach(todoItem => {
-            newTodoItems[todoItem.id] = todoItem;
+            newTodoItems[todoItem.id] = {
+              id: todoItem.id,
+              value: todoItem.value,
+              isChecked: todoItem.is_checked
+            };
           });
           todoList.todoItems = newTodoItems;
 
@@ -93,6 +98,23 @@ class MainContent extends Component {
     });
   }
 
+  toggleCheckTodoItem(todoListId, todoItemId, isChecked) {
+    this.setState(state => {
+      const newTodoLists = cloneDeep(state.todoLists);
+      newTodoLists[todoListId].todoItems[todoItemId].isChecked = isChecked;
+
+      return { todoLists: newTodoLists };
+    });
+    $.ajax({
+      url: `/api/v1/todo_lists/${todoListId}/todo_items/${todoItemId}`,
+      method: "PUT",
+      data: { todo_item: { is_checked: isChecked } },
+      success: json => {
+        console.log("Saved checked");
+      }
+    });
+  }
+
   render() {
     const { todoLists } = this.state;
     return (
@@ -106,6 +128,7 @@ class MainContent extends Component {
               todoItems={todoLists[todoListId].todoItems}
               handleAddTodoItem={this.createTodoItem}
               handleSaveTitle={this.editTitle}
+              handleCheckTodoItem={this.toggleCheckTodoItem}
             />
           ))}
         </div>

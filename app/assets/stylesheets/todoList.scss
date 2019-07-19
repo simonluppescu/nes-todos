@@ -22,8 +22,23 @@
 }
 
 .one-todo {
-  display: block;
+  display: flex;
   font-size: 18px;
+
+  .todo-inputs {
+    display: flex;
+    align-items: center;
+    flex: 1;
+  }
+
+  .todo-item-actions-btn {
+    visibility: hidden;
+    font-size: 14px;
+    padding: 5px;
+  }
+  &:hover .todo-item-actions-btn {
+    visibility: visible;
+  }
 }
 
 .add-entity {

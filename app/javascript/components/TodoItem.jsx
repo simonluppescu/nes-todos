@@ -9,21 +9,26 @@ class TodoItem extends Component {
     this.handleCheck = this.handleCheck.bind(this);
   }
 
-  handleCheck() {
-    this.setState(state => {
-      return { isChecked: !state.isChecked };
-    });
+  handleCheck(event) {
+    this.props.handleCheckTodoItem(
+      this.props.todoListId,
+      this.props.id,
+      event.target.checked
+    );
   }
 
   render() {
     return (
-      <label className="one-todo">
-        <Checkbox
-          isChecked={this.props.isChecked}
-          onChange={this.handleCheck}
-        />
-        <span>{this.props.value}</span>
-      </label>
+      <div className="one-todo">
+        <label className="todo-inputs">
+          <Checkbox
+            isChecked={this.props.isChecked || false}
+            onChange={this.handleCheck}
+          />
+          <span>{this.props.value}</span>
+        </label>
+        <a className="todo-item-actions-btn nes-btn">Actions</a>
+      </div>
     );
   }
 }

@@ -30,8 +30,10 @@ class TodoList extends Component {
             <TodoItem
               key={todoItemId}
               id={todoItemId}
+              todoListId={this.props.id}
               value={todoItems[todoItemId].value}
               isChecked={todoItems[todoItemId].isChecked}
+              handleCheckTodoItem={this.props.handleCheckTodoItem}
             />
           ))}
         </div>
