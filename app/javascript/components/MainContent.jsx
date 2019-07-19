@@ -63,16 +63,14 @@ class MainContent extends Component {
       method: "POST",
       success: json => {
         this.setState(state => {
-          const newTodoItems = [
-            ...state.todoItems,
-            {
-              id: json.id,
-              value: json.value,
-              isChecked: json.is_checked
-            }
-          ];
+          const newTodoLists = cloneDeep(state.todoLists);
+          newTodoLists[todoListId].todoItems[json.id] = {
+            id: json.id,
+            value: json.value,
+            isChecked: json.is_checked
+          };
 
-          return { todoItems: newTodoItems };
+          return { todoLists: newTodoLists };
         });
       }
     });
