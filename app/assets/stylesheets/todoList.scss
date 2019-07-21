@@ -7,6 +7,8 @@
 }
 
 .todo-list-title {
+  display: inline;
+
   .edit-title {
     color: black;
     visibility: hidden;
@@ -30,6 +32,10 @@
     display: flex;
     align-items: center;
     flex: 1;
+  }
+
+  .nes-checkbox:checked + span {
+    color: #888;
   }
 
   .todo-item-actions-btn {

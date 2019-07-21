@@ -9,6 +9,8 @@ class TodoItem extends Component {
   constructor(props) {
     super(props);
 
+    this.actionsMenuTimeout = null;
+
     this.state = {
       isActionsOpen: false,
       isEdit: false,
@@ -24,6 +26,9 @@ class TodoItem extends Component {
     this.toggleEditItem = this.toggleEditItem.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.saveItemValue = this.saveItemValue.bind(this);
+    this.handleDeleteItem = this.handleDeleteItem.bind(this);
+    this.resetActionsMenu = this.resetActionsMenu.bind(this);
+    this.checkActionsMenuTimeout = this.checkActionsMenuTimeout.bind(this);
   }
 
   handleCheck(event) {
@@ -58,6 +63,19 @@ class TodoItem extends Component {
       this.props.id,
       this.state.inputValue
     );
+  }
+
+  handleDeleteItem() {
+    this.props.handleDeleteTodoItem(this.props.todoListId, this.props.id);
+  }
+
+  resetActionsMenu() {
+    this.actionsMenuTimeout = setTimeout(() => {
+      this.setState({ isActionsOpen: false });
+    }, 300);
+  }
+  checkActionsMenuTimeout() {
+    clearTimeout(this.actionsMenuTimeout);
   }
 
   getValueElement() {
@@ -108,7 +126,10 @@ class TodoItem extends Component {
 
   render() {
     return (
-      <div className="one-todo">
+      <div
+        className="one-todo"
+        onMouseEnter={this.checkActionsMenuTimeout}
+        onMouseLeave={this.resetActionsMenu}>
         {this.getValueElement()}
         <Button
           className="todo-item-actions-btn"

@@ -35,6 +35,7 @@ class TodoList extends Component {
               isChecked={todoItems[todoItemId].isChecked}
               handleCheckTodoItem={this.props.handleCheckTodoItem}
               handleEditTodoItem={this.props.handleEditTodoItem}
+              handleDeleteTodoItem={this.props.handleDeleteTodoItem}
             />
           ))}
         </div>
