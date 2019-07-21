@@ -1,0 +1,4 @@
+.nes-checkbox + span::before,
+.nes-checkbox:checked + span::before {
+  top: 1px;
+}
