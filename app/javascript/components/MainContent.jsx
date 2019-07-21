@@ -13,10 +13,15 @@ class MainContent extends Component {
       todoLists: {}
     };
 
+    this.bindMethods();
+  }
+
+  bindMethods() {
     this.createTodoList = this.createTodoList.bind(this);
     this.createTodoItem = this.createTodoItem.bind(this);
     this.editTitle = this.editTitle.bind(this);
     this.toggleCheckTodoItem = this.toggleCheckTodoItem.bind(this);
+    this.editTodoItem = this.editTodoItem.bind(this);
   }
 
   componentDidMount() {
@@ -115,7 +120,26 @@ class MainContent extends Component {
     });
   }
 
+  editTodoItem(todoListId, todoItemId, newValue) {
+    this.setState(state => {
+      const newTodoLists = cloneDeep(state.todoLists);
+      newTodoLists[todoListId].todoItems[todoItemId].value = newValue;
+
+      return { todoLists: newTodoLists };
+    });
+    $.ajax({
+      url: `/api/v1/todo_lists/${todoListId}/todo_items/${todoItemId}`,
+      method: "PUT",
+      data: { todo_item: { value: newValue } },
+      success: json => {
+        console.log("Saved value");
+      }
+    });
+  }
+
   render() {
+    console.log("current state");
+    console.log(this.state);
     const { todoLists } = this.state;
     return (
       <BootstrapContainer>
@@ -129,6 +153,7 @@ class MainContent extends Component {
               handleAddTodoItem={this.createTodoItem}
               handleSaveTitle={this.editTitle}
               handleCheckTodoItem={this.toggleCheckTodoItem}
+              handleEditTodoItem={this.editTodoItem}
             />
           ))}
         </div>

@@ -34,10 +34,11 @@ class TodoList extends Component {
               value={todoItems[todoItemId].value}
               isChecked={todoItems[todoItemId].isChecked}
               handleCheckTodoItem={this.props.handleCheckTodoItem}
+              handleEditTodoItem={this.props.handleEditTodoItem}
             />
           ))}
         </div>
-        <Button variant="success" onClick={this.handleAddTodoItem}>
+        <Button variant="primary" onClick={this.handleAddTodoItem}>
           Add Todo
         </Button>
       </Container>

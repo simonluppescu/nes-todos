@@ -24,6 +24,7 @@
 .one-todo {
   display: flex;
   font-size: 18px;
+  position: relative;
 
   .todo-inputs {
     display: flex;
@@ -38,6 +39,19 @@
   }
   &:hover .todo-item-actions-btn {
     visibility: visible;
+  }
+
+  .todo-item-actions-container {
+    background: white;
+    font-size: 14px;
+    position: absolute;
+    right: 0;
+    top: 45px;
+    z-index: 3;
+  }
+
+  .edit-value-container {
+    display: flex;
   }
 }
 
