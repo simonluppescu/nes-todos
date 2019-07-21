@@ -27,7 +27,6 @@ class TodoItem extends Component {
   }
 
   handleCheck(event) {
-    console.log("Check called in todoItem");
     this.props.handleCheckTodoItem(
       this.props.todoListId,
       this.props.id,
@@ -62,7 +61,6 @@ class TodoItem extends Component {
   }
 
   getValueElement() {
-    console.log("getValueElement()");
     let valueElement = null;
     if (this.state.isEdit) {
       valueElement = (
@@ -80,13 +78,13 @@ class TodoItem extends Component {
       );
     } else {
       valueElement = (
-        <React.Fragment>
+        <label className="todo-inputs">
           <Checkbox
             isChecked={this.props.isChecked || false}
             onChange={this.handleCheck}
           />
           <span>{this.state.inputValue}</span>
-        </React.Fragment>
+        </label>
       );
     }
     return valueElement;
@@ -109,10 +107,9 @@ class TodoItem extends Component {
   }
 
   render() {
-    console.log("render()");
     return (
       <div className="one-todo">
-        <label className="todo-inputs">{this.getValueElement()}</label>
+        {this.getValueElement()}
         <Button
           className="todo-item-actions-btn"
           variant="info"

@@ -138,8 +138,6 @@ class MainContent extends Component {
   }
 
   render() {
-    console.log("current state");
-    console.log(this.state);
     const { todoLists } = this.state;
     return (
       <BootstrapContainer>
