@@ -1,17 +1,28 @@
 import React from "react";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+
+import rootReducer from "../reducers";
 
 import MainNav from "./MainNav";
-import MainContent from "./MainContent";
+import MainContentContainer from "../containers/MainContentContainer";
 
-class App extends React.Component {
-  render() {
-    return (
+const store = createStore(
+  rootReducer,
+  { todoLists: {} },
+  composeWithDevTools()
+);
+
+const App = () => {
+  return (
+    <Provider store={store}>
       <React.Fragment>
         <MainNav />
-        <MainContent />
+        <MainContentContainer />
       </React.Fragment>
-    );
-  }
-}
+    </Provider>
+  );
+};
 
 export default App;

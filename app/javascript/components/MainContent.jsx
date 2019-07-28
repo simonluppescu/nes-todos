@@ -9,10 +9,6 @@ class MainContent extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      todoLists: {}
-    };
-
     this.bindMethods();
   }
 
@@ -23,30 +19,6 @@ class MainContent extends Component {
     this.toggleCheckTodoItem = this.toggleCheckTodoItem.bind(this);
     this.editTodoItem = this.editTodoItem.bind(this);
     this.deleteTodoItem = this.deleteTodoItem.bind(this);
-  }
-
-  componentDidMount() {
-    $.ajax({
-      url: "/api/v1/todo_lists.json",
-      method: "GET",
-      success: json => {
-        const newTodoLists = {};
-        json.forEach(todoList => {
-          const newTodoItems = {};
-          todoList.todo_items.forEach(todoItem => {
-            newTodoItems[todoItem.id] = {
-              id: todoItem.id,
-              value: todoItem.value,
-              isChecked: todoItem.is_checked
-            };
-          });
-          todoList.todoItems = newTodoItems;
-
-          newTodoLists[todoList.id] = todoList;
-        });
-        this.setState({ todoLists: newTodoLists });
-      }
-    });
   }
 
   createTodoList() {
@@ -155,7 +127,7 @@ class MainContent extends Component {
   }
 
   render() {
-    const { todoLists } = this.state;
+    const { todoLists } = this.props;
     return (
       <BootstrapContainer>
         <div id="todo-lists-container">
