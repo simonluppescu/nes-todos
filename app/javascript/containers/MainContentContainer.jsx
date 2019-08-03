@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { setTodos } from "../actions";
+import { setTodos, addTodoList } from "../actions";
 import MainContent from "../components/MainContent";
 
 class MainContentContainer extends Component {
@@ -10,7 +10,12 @@ class MainContentContainer extends Component {
   }
 
   render() {
-    return <MainContent todoLists={this.props.todoLists} />;
+    return (
+      <MainContent
+        todoLists={this.props.todoLists}
+        createTodoList={this.props.createTodoList}
+      />
+    );
   }
 }
 
@@ -39,6 +44,22 @@ const loadTodoLists = callback => {
   });
 };
 
+const createTodoList = callback => {
+  $.ajax({
+    url: "/api/v1/todo_lists",
+    method: "POST",
+    success: json => {
+      const newTodoList = {
+        id: json.id,
+        title: json.title,
+        todoItems: {}
+      };
+
+      callback(newTodoList);
+    }
+  });
+};
+
 const mapStateToProps = state => ({
   todoLists: state.todoLists
 });
@@ -46,6 +67,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   loadTodoLists: () => {
     loadTodoLists(todoLists => dispatch(setTodos(todoLists)));
+  },
+  createTodoList: () => {
+    createTodoList(newTodoList => dispatch(addTodoList(newTodoList)));
   }
 });
 

@@ -13,31 +13,11 @@ class MainContent extends Component {
   }
 
   bindMethods() {
-    this.createTodoList = this.createTodoList.bind(this);
     this.createTodoItem = this.createTodoItem.bind(this);
     this.editTitle = this.editTitle.bind(this);
     this.toggleCheckTodoItem = this.toggleCheckTodoItem.bind(this);
     this.editTodoItem = this.editTodoItem.bind(this);
     this.deleteTodoItem = this.deleteTodoItem.bind(this);
-  }
-
-  createTodoList() {
-    $.ajax({
-      url: "/api/v1/todo_lists",
-      method: "POST",
-      success: json => {
-        this.setState(state => {
-          const newTodoLists = cloneDeep(state.todoLists);
-          newTodoLists[json.id] = {
-            id: json.id,
-            title: json.title,
-            todoItems: {}
-          };
-
-          return { todoLists: newTodoLists };
-        });
-      }
-    });
   }
 
   createTodoItem(todoListId) {
@@ -145,7 +125,7 @@ class MainContent extends Component {
             />
           ))}
         </div>
-        <AddEntity createList={this.createTodoList} />
+        <AddEntity createList={this.props.createTodoList} />
       </BootstrapContainer>
     );
   }

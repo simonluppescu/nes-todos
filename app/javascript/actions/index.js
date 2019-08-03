@@ -1,6 +1,6 @@
-export const addTodo = (id, text) => ({
+export const addTodoList = newTodoList => ({
   type: "ADD_TODO_LIST",
-  payload: { id, text }
+  payload: newTodoList
 });
 
 export const setTodos = todoLists => ({
