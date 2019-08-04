@@ -7,8 +7,7 @@ class TodoListTitle extends Component {
     super(props);
 
     this.state = {
-      isEditTitle: false,
-      inputValue: props.title
+      isEditTitle: false
     };
 
     this.toggleEditTitle = this.toggleEditTitle.bind(this);
@@ -22,8 +21,23 @@ class TodoListTitle extends Component {
     });
   }
 
+  saveTitle() {
+    this.toggleEditTitle();
+
+    const { todoListId, value } = this.props;
+
+    $.ajax({
+      url: `/api/v1/todo_lists/${todoListId}`,
+      method: "PUT",
+      data: { todo_list: { title: value } },
+      success: json => {
+        console.log(`Saved TodoList ${todoListId} with title ${value}`);
+      }
+    });
+  }
+
   handleInputChange(event) {
-    this.setState({ inputValue: event.target.value });
+    this.props.onEditTitle(this.props.todoListId, event.target.value);
   }
 
   getTitleElement() {
@@ -34,7 +48,7 @@ class TodoListTitle extends Component {
           <input
             type="text"
             className="nes-input"
-            value={this.state.inputValue}
+            value={this.props.value}
             onChange={this.handleInputChange}
           />
           <Button variant="success" onClick={this.saveTitle}>
@@ -45,17 +59,11 @@ class TodoListTitle extends Component {
     } else {
       titleElement = (
         <h2 className="todo-list-title" onClick={this.toggleEditTitle}>
-          {this.props.title} <span className="edit-title">Edit</span>
+          {this.props.value} <span className="edit-title">Edit</span>
         </h2>
       );
     }
     return titleElement;
-  }
-
-  saveTitle(event) {
-    this.toggleEditTitle();
-
-    this.props.handleSaveTitle(this.props.todoListId, this.state.inputValue);
   }
 
   render() {

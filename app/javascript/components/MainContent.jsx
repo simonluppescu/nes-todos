@@ -3,7 +3,7 @@ import * as BootstrapContainer from "react-bootstrap/Container";
 import cloneDeep from "clone-deep";
 
 import AddEntity from "./AddEntity";
-import TodoList from "./TodoList";
+import TodoListContainer from "../containers/TodoListContainer";
 
 class MainContent extends Component {
   constructor(props) {
@@ -14,7 +14,6 @@ class MainContent extends Component {
 
   bindMethods() {
     this.createTodoItem = this.createTodoItem.bind(this);
-    this.editTitle = this.editTitle.bind(this);
     this.toggleCheckTodoItem = this.toggleCheckTodoItem.bind(this);
     this.editTodoItem = this.editTodoItem.bind(this);
     this.deleteTodoItem = this.deleteTodoItem.bind(this);
@@ -35,23 +34,6 @@ class MainContent extends Component {
 
           return { todoLists: newTodoLists };
         });
-      }
-    });
-  }
-
-  editTitle(todoListId, newTitle) {
-    this.setState(state => {
-      const newTodoLists = cloneDeep(state.todoLists);
-      newTodoLists[todoListId].title = newTitle;
-
-      return { todoLists: newTodoLists };
-    });
-    $.ajax({
-      url: `/api/v1/todo_lists/${todoListId}`,
-      method: "PUT",
-      data: { todo_list: { title: newTitle } },
-      success: json => {
-        console.log(`Saved title for todoList[${todoListId}] to ${newTitle}`);
       }
     });
   }
@@ -112,11 +94,9 @@ class MainContent extends Component {
       <BootstrapContainer>
         <div id="todo-lists-container">
           {Object.keys(todoLists).map(todoListId => (
-            <TodoList
+            <TodoListContainer
               key={todoListId}
-              id={todoListId}
-              title={todoLists[todoListId].title}
-              todoItems={todoLists[todoListId].todoItems}
+              todoList={todoLists[todoListId]}
               handleAddTodoItem={this.createTodoItem}
               handleSaveTitle={this.editTitle}
               handleCheckTodoItem={this.toggleCheckTodoItem}

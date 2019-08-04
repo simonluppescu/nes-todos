@@ -12,18 +12,19 @@ class TodoList extends Component {
     this.handleAddTodoItem = this.handleAddTodoItem.bind(this);
   }
 
+  // TODO: Remove
   handleAddTodoItem() {
     this.props.handleAddTodoItem(this.props.id);
   }
 
   render() {
-    const { todoItems } = this.props;
+    const { id, title, todoItems } = this.props.todoList;
     return (
       <Container className="todo-list-container is-rounded">
         <TodoListTitle
-          todoListId={this.props.id}
-          title={this.props.title}
-          handleSaveTitle={this.props.handleSaveTitle}
+          todoListId={id}
+          value={title}
+          onEditTitle={this.props.onEditTitle}
         />
         <div className="todo-list">
           {Object.keys(todoItems).map(todoItemId => (
