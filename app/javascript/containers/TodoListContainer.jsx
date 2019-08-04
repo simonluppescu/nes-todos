@@ -15,17 +15,6 @@ export class TodoListContainer extends Component {
   }
 }
 
-const editTitle = (todoListId, newTitle, callback) => {
-  $.ajax({
-    url: `/api/v1/todo_lists/${todoListId}`,
-    method: "PUT",
-    data: { todo_list: { title: newTitle } },
-    success: json => {
-      callback();
-    }
-  });
-};
-
 const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch => ({
