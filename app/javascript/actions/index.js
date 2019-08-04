@@ -12,3 +12,8 @@ export const editListTitle = (id, title) => ({
   type: "EDIT_TITLE",
   payload: { id, title }
 });
+
+export const addTodoItem = newTodoItem => ({
+  type: "ADD_TODO_ITEM",
+  payload: newTodoItem
+});

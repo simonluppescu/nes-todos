@@ -26,6 +26,10 @@ const loadTodoLists = callback => {
     success: json => {
       const newTodoLists = {};
       json.forEach(todoList => {
+        const newTodoList = {
+          id: todoList.id,
+          title: todoList.title
+        };
         const newTodoItems = {};
         todoList.todo_items.forEach(todoItem => {
           newTodoItems[todoItem.id] = {
@@ -34,9 +38,9 @@ const loadTodoLists = callback => {
             isChecked: todoItem.is_checked
           };
         });
-        todoList.todoItems = newTodoItems;
+        newTodoList.todoItems = newTodoItems;
 
-        newTodoLists[todoList.id] = todoList;
+        newTodoLists[todoList.id] = newTodoList;
       });
 
       callback(newTodoLists);

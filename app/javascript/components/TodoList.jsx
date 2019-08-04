@@ -12,9 +12,8 @@ class TodoList extends Component {
     this.handleAddTodoItem = this.handleAddTodoItem.bind(this);
   }
 
-  // TODO: Remove
   handleAddTodoItem() {
-    this.props.handleAddTodoItem(this.props.id);
+    this.props.onAddTodoItem(this.props.todoList.id);
   }
 
   render() {

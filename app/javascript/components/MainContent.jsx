@@ -20,22 +20,7 @@ class MainContent extends Component {
   }
 
   createTodoItem(todoListId) {
-    $.ajax({
-      url: `/api/v1/todo_lists/${todoListId}/todo_items`,
-      method: "POST",
-      success: json => {
-        this.setState(state => {
-          const newTodoLists = cloneDeep(state.todoLists);
-          newTodoLists[todoListId].todoItems[json.id] = {
-            id: json.id,
-            value: json.value,
-            isChecked: json.is_checked
-          };
 
-          return { todoLists: newTodoLists };
-        });
-      }
-    });
   }
 
   toggleCheckTodoItem(todoListId, todoItemId, isChecked) {
