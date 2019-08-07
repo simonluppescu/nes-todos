@@ -1,7 +1,9 @@
 import cloneDeep from "clone-deep";
+import todoItemReducer from "./todoItemReducer";
 
 export default (state = {}, { type, payload }) => {
   let newState;
+  let todoList;
 
   switch (type) {
     case "SET_TODOS":
@@ -17,11 +19,11 @@ export default (state = {}, { type, payload }) => {
 
     case "ADD_TODO_ITEM":
       newState = cloneDeep(state);
-      newState[payload.todoListId].todoItems[payload.id] = {
-        id: payload.id,
-        value: payload.value,
-        isChecked: payload.isChecked
-      };
+      todoList = newState[payload.todoListId];
+      todoList.todoItems = todoItemReducer(todoList.todoItems, {
+        type,
+        payload
+      });
       return newState;
 
     default:
