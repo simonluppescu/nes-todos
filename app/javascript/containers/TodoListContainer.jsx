@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { editListTitle, addTodoItem } from "../actions";
+import { editListTitle, addTodoItem, deleteTodoItem } from "../actions";
 
 import TodoList from "../components/TodoList";
 
@@ -11,6 +11,7 @@ export class TodoListContainer extends Component {
         onEditTitle={this.props.editTitle}
         todoList={this.props.todoList}
         onAddTodoItem={this.props.handleAddTodoItem}
+        onDeleteTodoItem={this.props.handleDeleteTodoItem}
       />
     );
   }
@@ -31,6 +32,16 @@ const handleAddTodoItem = (todoListId, callback) => {
   });
 };
 
+const handleDeleteTodoItem = (todoListId, todoItemId, callback) => {
+  $.ajax({
+    url: `/api/v1/todo_lists/${todoListId}/todo_items/${todoItemId}`,
+    method: "DELETE",
+    success: json => {
+      callback();
+    }
+  });
+};
+
 const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch => ({
@@ -38,6 +49,11 @@ const mapDispatchToProps = dispatch => ({
   handleAddTodoItem: todoListId => {
     handleAddTodoItem(todoListId, newTodoItem =>
       dispatch(addTodoItem(newTodoItem))
+    );
+  },
+  handleDeleteTodoItem: (todoListId, todoItemId) => {
+    handleDeleteTodoItem(todoListId, todoItemId, () =>
+      dispatch(deleteTodoItem(todoListId, todoItemId))
     );
   }
 });

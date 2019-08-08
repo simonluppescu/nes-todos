@@ -17,11 +17,11 @@ class TodoList extends Component {
   }
 
   render() {
-    const { id, title, todoItems } = this.props.todoList;
+    const { id: todoListId, title, todoItems } = this.props.todoList;
     return (
       <Container className="todo-list-container is-rounded">
         <TodoListTitle
-          todoListId={id}
+          todoListId={todoListId}
           value={title}
           onEditTitle={this.props.onEditTitle}
         />
@@ -30,12 +30,12 @@ class TodoList extends Component {
             <TodoItem
               key={todoItemId}
               id={todoItemId}
-              todoListId={this.props.id}
+              todoListId={todoListId}
               value={todoItems[todoItemId].value}
               isChecked={todoItems[todoItemId].isChecked}
               handleCheckTodoItem={this.props.handleCheckTodoItem}
               handleEditTodoItem={this.props.handleEditTodoItem}
-              handleDeleteTodoItem={this.props.handleDeleteTodoItem}
+              onDeleteTodoItem={this.props.onDeleteTodoItem}
             />
           ))}
         </div>

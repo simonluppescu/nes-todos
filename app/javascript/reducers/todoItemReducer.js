@@ -10,6 +10,13 @@ export default (state = {}, { type, payload }) => {
         }
       };
 
+    case "DELETE_TODO_ITEM": {
+      const newState = { ...state };
+      delete newState[payload.todoItemId];
+
+      return newState;
+    }
+
     default:
       return state;
   }

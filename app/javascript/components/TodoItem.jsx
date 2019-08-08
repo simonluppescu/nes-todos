@@ -66,7 +66,7 @@ class TodoItem extends Component {
   }
 
   handleDeleteItem() {
-    this.props.handleDeleteTodoItem(this.props.todoListId, this.props.id);
+    this.props.onDeleteTodoItem(this.props.todoListId, this.props.id);
   }
 
   resetActionsMenu() {

@@ -17,3 +17,8 @@ export const addTodoItem = newTodoItem => ({
   type: "ADD_TODO_ITEM",
   payload: newTodoItem
 });
+
+export const deleteTodoItem = (todoListId, todoItemId) => ({
+  type: "DELETE_TODO_ITEM",
+  payload: { todoListId, todoItemId }
+});

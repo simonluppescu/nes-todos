@@ -26,6 +26,15 @@ export default (state = {}, { type, payload }) => {
       });
       return newState;
 
+    case "DELETE_TODO_ITEM":
+      newState = cloneDeep(state);
+      todoList = newState[payload.todoListId];
+      todoList.todoItems = todoItemReducer(todoList.todoItems, {
+        type,
+        payload
+      });
+      return newState;
+
     default:
       return state;
   }
