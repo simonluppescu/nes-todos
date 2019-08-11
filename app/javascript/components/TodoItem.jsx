@@ -70,12 +70,20 @@ class TodoItem extends Component {
         <div className="edit-value-container">
           <input
             type="text"
+            name="value"
             className="nes-input"
             value={this.props.value}
             onChange={event => {
               this.props.editTodoItem(this.props.todoListId, this.props.id, {
                 value: event.target.value
               });
+            }}
+            onKeyPress={event => {
+              if (event.key === "Enter") {
+                this.saveItem(event.target.name, this.props.value, () => {
+                  this.toggleEditItem();
+                })
+              }
             }}
           />
           <Button
