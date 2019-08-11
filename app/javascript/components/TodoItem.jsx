@@ -21,6 +21,7 @@ class TodoItem extends Component {
     this.resetActionsMenu = this.resetActionsMenu.bind(this);
     this.checkActionsMenuTimeout = this.checkActionsMenuTimeout.bind(this);
     this.saveItem = this.saveItem.bind(this);
+    this.handleDeleteItem = this.handleDeleteItem.bind(this);
   }
 
   toggleActionsOpen() {
@@ -47,6 +48,10 @@ class TodoItem extends Component {
         if (callback) callback();
       }
     });
+  }
+
+  handleDeleteItem() {
+    this.props.onDeleteTodoItem(this.props.todoListId, this.props.id);
   }
 
   resetActionsMenu() {

@@ -6,7 +6,15 @@ import TodoItem from "../components/TodoItem";
 
 export class TodoItemContainer extends Component {
   render() {
-    const { todoListId, id, value, isChecked, editTodoItem } = this.props;
+    const {
+      todoListId,
+      id,
+      value,
+      isChecked,
+      editTodoItem,
+      onDeleteTodoItem
+    } = this.props;
+
     return (
       <TodoItem
         todoListId={todoListId}
@@ -14,6 +22,7 @@ export class TodoItemContainer extends Component {
         value={value}
         isChecked={isChecked}
         editTodoItem={editTodoItem}
+        onDeleteTodoItem={onDeleteTodoItem}
       />
     );
   }
