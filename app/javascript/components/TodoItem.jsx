@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 
-import Checkbox from "./Checkbox";
-import ListMenu from "./nes/ListMenu";
-import Container from "./nes/Container";
 import Button from "./nes/Button";
+import TodoItemActions from "./TodoItemActions";
+import TodoItemValue from "./TodoItemValue";
 
 class TodoItem extends Component {
   constructor(props) {
@@ -43,7 +42,8 @@ class TodoItem extends Component {
       method: "PUT",
       data: { todo_item: { [fieldName]: value } },
       success: json => {
-        console.log("Saved value");
+        console.log(`Successfully edited todo`);
+        console.log(json);
 
         if (callback) callback();
       }
@@ -63,93 +63,35 @@ class TodoItem extends Component {
     clearTimeout(this.actionsMenuTimeout);
   }
 
-  getValueElement() {
-    let valueElement = null;
-    if (this.state.isEdit) {
-      valueElement = (
-        <div className="edit-value-container">
-          <input
-            type="text"
-            name="value"
-            className="nes-input"
-            value={this.props.value}
-            onChange={event => {
-              this.props.editTodoItem(this.props.todoListId, this.props.id, {
-                value: event.target.value
-              });
-            }}
-            onKeyPress={event => {
-              if (event.key === "Enter") {
-                this.saveItem(event.target.name, this.props.value, () => {
-                  this.toggleEditItem();
-                })
-              }
-            }}
-          />
-          <Button
-            variant="success"
-            name="value"
-            onClick={event =>
-              this.saveItem(event.target.name, this.props.value, () => {
-                this.toggleEditItem();
-              })
-            }>
-            Save
-          </Button>
-        </div>
-      );
-    } else {
-      valueElement = (
-        <label className="todo-inputs">
-          <Checkbox
-            isChecked={this.props.isChecked || false}
-            name="is_checked"
-            onChange={event => {
-              const { name, checked } = event.target;
-              this.saveItem(name, checked, () => {
-                this.props.editTodoItem(this.props.todoListId, this.props.id, {
-                  isChecked: checked
-                });
-              });
-            }}
-          />
-          <span>{this.props.value}</span>
-        </label>
-      );
-    }
-    return valueElement;
-  }
-  getActionsContainer() {
-    let actionsContainer = null;
-    if (this.state.isActionsOpen) {
-      actionsContainer = (
-        <Container className="todo-item-actions-container is-rounded">
-          <ListMenu
-            items={[
-              { text: "Edit", action: this.toggleEditItem },
-              { text: "Delete", action: this.handleDeleteItem }
-            ]}
-          />
-        </Container>
-      );
-    }
-    return actionsContainer;
-  }
-
   render() {
     return (
       <div
         className="one-todo"
         onMouseEnter={this.checkActionsMenuTimeout}
         onMouseLeave={this.resetActionsMenu}>
-        {this.getValueElement()}
+        <TodoItemValue
+          isEdit={this.state.isEdit}
+          todoListId={this.props.todoListId}
+          id={this.props.id}
+          value={this.props.value}
+          isChecked={this.props.isChecked}
+          editTodoItem={this.props.editTodoItem}
+          saveItem={this.saveItem}
+          toggleEditItem={this.toggleEditItem}
+        />
         <Button
           className="todo-item-actions-btn"
           variant="info"
           onClick={this.toggleActionsOpen}>
           Actions
         </Button>
-        {this.getActionsContainer()}
+        <TodoItemActions
+          isOpen={this.state.isActionsOpen}
+          items={[
+            { text: "Edit", action: this.toggleEditItem },
+            { text: "Delete", action: this.handleDeleteItem }
+          ]}
+        />
       </div>
     );
   }
