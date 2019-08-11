@@ -13,30 +13,14 @@ class TodoItem extends Component {
 
     this.state = {
       isActionsOpen: false,
-      isEdit: false,
-      inputValue: props.value
+      isEdit: false
     };
 
-    this.bindMethods();
-  }
-
-  bindMethods() {
-    this.handleCheck = this.handleCheck.bind(this);
     this.toggleActionsOpen = this.toggleActionsOpen.bind(this);
     this.toggleEditItem = this.toggleEditItem.bind(this);
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.saveItemValue = this.saveItemValue.bind(this);
-    this.handleDeleteItem = this.handleDeleteItem.bind(this);
     this.resetActionsMenu = this.resetActionsMenu.bind(this);
     this.checkActionsMenuTimeout = this.checkActionsMenuTimeout.bind(this);
-  }
-
-  handleCheck(event) {
-    this.props.handleCheckTodoItem(
-      this.props.todoListId,
-      this.props.id,
-      event.target.checked
-    );
+    this.saveItem = this.saveItem.bind(this);
   }
 
   toggleActionsOpen() {
@@ -51,22 +35,18 @@ class TodoItem extends Component {
     });
   }
 
-  handleInputChange(event) {
-    this.setState({ inputValue: event.target.value });
-  }
+  saveItem(fieldName, value, callback) {
+    const { todoListId, id } = this.props;
+    $.ajax({
+      url: `/api/v1/todo_lists/${todoListId}/todo_items/${id}`,
+      method: "PUT",
+      data: { todo_item: { [fieldName]: value } },
+      success: json => {
+        console.log("Saved value");
 
-  saveItemValue() {
-    this.toggleEditItem();
-
-    this.props.handleEditTodoItem(
-      this.props.todoListId,
-      this.props.id,
-      this.state.inputValue
-    );
-  }
-
-  handleDeleteItem() {
-    this.props.onDeleteTodoItem(this.props.todoListId, this.props.id);
+        if (callback) callback();
+      }
+    });
   }
 
   resetActionsMenu() {
@@ -86,10 +66,21 @@ class TodoItem extends Component {
           <input
             type="text"
             className="nes-input"
-            value={this.state.inputValue}
-            onChange={this.handleInputChange}
+            value={this.props.value}
+            onChange={event => {
+              this.props.editTodoItem(this.props.todoListId, this.props.id, {
+                value: event.target.value
+              });
+            }}
           />
-          <Button variant="success" onClick={this.saveItemValue}>
+          <Button
+            variant="success"
+            name="value"
+            onClick={event =>
+              this.saveItem(event.target.name, this.props.value, () => {
+                this.toggleEditItem();
+              })
+            }>
             Save
           </Button>
         </div>
@@ -99,9 +90,17 @@ class TodoItem extends Component {
         <label className="todo-inputs">
           <Checkbox
             isChecked={this.props.isChecked || false}
-            onChange={this.handleCheck}
+            name="is_checked"
+            onChange={event => {
+              const { name, checked } = event.target;
+              this.saveItem(name, checked, () => {
+                this.props.editTodoItem(this.props.todoListId, this.props.id, {
+                  isChecked: checked
+                });
+              });
+            }}
           />
-          <span>{this.state.inputValue}</span>
+          <span>{this.props.value}</span>
         </label>
       );
     }

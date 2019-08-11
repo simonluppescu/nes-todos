@@ -22,3 +22,8 @@ export const deleteTodoItem = (todoListId, todoItemId) => ({
   type: "DELETE_TODO_ITEM",
   payload: { todoListId, todoItemId }
 });
+
+export const editTodoItem = (todoListId, todoItemId, fields) => ({
+  type: "EDIT_TODO_ITEM",
+  payload: { todoListId, todoItemId, fields }
+});

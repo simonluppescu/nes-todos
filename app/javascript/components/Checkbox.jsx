@@ -5,6 +5,7 @@ const Checkbox = props => {
     <input
       type="checkbox"
       className="nes-checkbox"
+      name={props.name}
       checked={props.isChecked}
       onChange={props.onChange}
     />

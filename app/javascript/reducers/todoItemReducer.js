@@ -17,6 +17,13 @@ export default (state = {}, { type, payload }) => {
       return newState;
     }
 
+    case "EDIT_TODO_ITEM": {
+      const newState = { ...state };
+      Object.assign(newState[payload.todoItemId], payload.fields);
+
+      return newState;
+    }
+
     default:
       return state;
   }

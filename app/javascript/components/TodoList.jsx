@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import Button from "./nes/Button";
 import Container from "./nes/Container";
 import TodoListTitle from "./TodoListTitle";
-import TodoItem from "./TodoItem";
+import TodoItemContainer from "../containers/TodoItemContainer";
 
 class TodoList extends Component {
   constructor(props) {
@@ -27,7 +27,7 @@ class TodoList extends Component {
         />
         <div className="todo-list">
           {Object.keys(todoItems).map(todoItemId => (
-            <TodoItem
+            <TodoItemContainer
               key={todoItemId}
               id={todoItemId}
               todoListId={todoListId}
