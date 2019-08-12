@@ -2,9 +2,6 @@ import cloneDeep from "clone-deep";
 import todoItemReducer from "./todoItemReducer";
 
 export default (state = {}, { type, payload }) => {
-  let newState;
-  let todoList;
-
   switch (type) {
     case "SET_TODOS":
       return payload.todoLists;
@@ -18,37 +15,41 @@ export default (state = {}, { type, payload }) => {
       return newState;
     }
 
-    case "EDIT_TITLE":
-      newState = cloneDeep(state);
+    case "EDIT_TITLE": {
+      const newState = cloneDeep(state);
       newState[payload.id].title = payload.title;
       return newState;
+    }
 
-    case "ADD_TODO_ITEM":
-      newState = cloneDeep(state);
-      todoList = newState[payload.todoListId];
+    case "ADD_TODO_ITEM": {
+      const newState = cloneDeep(state);
+      const todoList = newState[payload.todoListId];
       todoList.todoItems = todoItemReducer(todoList.todoItems, {
         type,
         payload
       });
       return newState;
+    }
 
-    case "DELETE_TODO_ITEM":
-      newState = cloneDeep(state);
-      todoList = newState[payload.todoListId];
+    case "DELETE_TODO_ITEM": {
+      const newState = cloneDeep(state);
+      const todoList = newState[payload.todoListId];
       todoList.todoItems = todoItemReducer(todoList.todoItems, {
         type,
         payload
       });
       return newState;
+    }
 
-    case "EDIT_TODO_ITEM":
-      newState = cloneDeep(state);
-      todoList = newState[payload.todoListId];
+    case "EDIT_TODO_ITEM": {
+      const newState = cloneDeep(state);
+      const todoList = newState[payload.todoListId];
       todoList.todoItems = todoItemReducer(todoList.todoItems, {
         type,
         payload
       });
       return newState;
+    }
 
     default:
       return state;
