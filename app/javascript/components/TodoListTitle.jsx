@@ -41,10 +41,9 @@ class TodoListTitle extends Component {
     this.props.onEditTitle(this.props.todoListId, event.target.value);
   }
 
-  getTitleElement() {
-    let titleElement = null;
+  render() {
     if (this.state.isEditTitle) {
-      titleElement = (
+      return (
         <EditValue
           value={this.props.value}
           onInputChange={this.handleInputChange}
@@ -52,17 +51,12 @@ class TodoListTitle extends Component {
         />
       );
     } else {
-      titleElement = (
+      return (
         <h2 className="todo-list-title" onClick={this.toggleEditTitle}>
           {this.props.value} <span className="edit-title">Edit</span>
         </h2>
       );
     }
-    return titleElement;
-  }
-
-  render() {
-    return this.getTitleElement();
   }
 }
 
