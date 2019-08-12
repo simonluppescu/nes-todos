@@ -29,9 +29,18 @@ const TodoList = props => {
           />
         ))}
       </div>
-      <Button variant="primary" onClick={() => props.onAddTodoItem(todoListId)}>
-        Add Todo
-      </Button>
+      <div className="button-toolbar">
+        <Button
+          variant="primary"
+          onClick={() => props.onAddTodoItem(todoListId)}>
+          Add Todo
+        </Button>
+        <Button
+          variant="error"
+          onClick={() => props.onDeleteTodoList(todoListId)}>
+          Delete List
+        </Button>
+      </div>
     </Container>
   );
 };

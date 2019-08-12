@@ -12,6 +12,12 @@ export default (state = {}, { type, payload }) => {
     case "ADD_TODO_LIST":
       return { ...state, [payload.id]: payload };
 
+    case "DELETE_TODO_LIST": {
+      const newState = cloneDeep(state);
+      delete newState[payload.id];
+      return newState;
+    }
+
     case "EDIT_TITLE":
       newState = cloneDeep(state);
       newState[payload.id].title = payload.title;

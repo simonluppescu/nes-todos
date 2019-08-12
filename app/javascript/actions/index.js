@@ -3,6 +3,11 @@ export const addTodoList = newTodoList => ({
   payload: newTodoList
 });
 
+export const deleteTodoList = id => ({
+  type: "DELETE_TODO_LIST",
+  payload: { id }
+});
+
 export const setTodos = todoLists => ({
   type: "SET_TODOS",
   payload: { todoLists }

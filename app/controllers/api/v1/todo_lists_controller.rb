@@ -1,6 +1,6 @@
 class Api::V1::TodoListsController < Api::V1::BaseController
   def index
-    respond_with TodoList.all.to_json(include: :todo_items)
+    respond_with TodoList.active.to_json(include: :todo_items)
   end
 
   def show

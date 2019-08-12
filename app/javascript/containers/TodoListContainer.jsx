@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { editListTitle, addTodoItem, deleteTodoItem } from "../actions";
+import {
+  editListTitle,
+  addTodoItem,
+  deleteTodoItem,
+  deleteTodoList
+} from "../actions";
 
 import TodoList from "../components/TodoList";
 
@@ -12,10 +17,21 @@ export class TodoListContainer extends Component {
         todoList={this.props.todoList}
         onAddTodoItem={this.props.handleAddTodoItem}
         onDeleteTodoItem={this.props.handleDeleteTodoItem}
+        onDeleteTodoList={this.props.handleDeleteTodoList}
       />
     );
   }
 }
+
+const handleDeleteTodoList = (todoListId, callback) => {
+  $.ajax({
+    url: `/api/v1/todo_lists/${todoListId}`,
+    method: "DELETE",
+    success: json => {
+      callback();
+    }
+  });
+};
 
 const handleAddTodoItem = (todoListId, callback) => {
   $.ajax({
@@ -54,6 +70,11 @@ const mapDispatchToProps = dispatch => ({
   handleDeleteTodoItem: (todoListId, todoItemId) => {
     handleDeleteTodoItem(todoListId, todoItemId, () =>
       dispatch(deleteTodoItem(todoListId, todoItemId))
+    );
+  },
+  handleDeleteTodoList: todoListId => {
+    handleDeleteTodoList(todoListId, () =>
+      dispatch(deleteTodoList(todoListId))
     );
   }
 });
