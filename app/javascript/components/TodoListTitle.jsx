@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import Button from "./nes/Button";
+import EditValue from "./shared/EditValue";
 
 class TodoListTitle extends Component {
   constructor(props) {
@@ -44,17 +45,11 @@ class TodoListTitle extends Component {
     let titleElement = null;
     if (this.state.isEditTitle) {
       titleElement = (
-        <div className="edit-title-form">
-          <input
-            type="text"
-            className="nes-input"
-            value={this.props.value}
-            onChange={this.handleInputChange}
-          />
-          <Button variant="success" onClick={this.saveTitle}>
-            Save
-          </Button>
-        </div>
+        <EditValue
+          value={this.props.value}
+          onInputChange={this.handleInputChange}
+          onSave={this.saveTitle}
+        />
       );
     } else {
       titleElement = (

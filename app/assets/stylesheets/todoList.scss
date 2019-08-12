@@ -57,12 +57,6 @@
     top: 100%;
     z-index: 3;
   }
-
-  .edit-value-container {
-    display: flex;
-    flex: 1;
-    margin-bottom: 10px;
-  }
 }
 
 .add-entity {
@@ -83,4 +77,11 @@
 
 .edit-title-form {
   display: flex;
+}
+
+.edit-value-container {
+  display: flex;
+  flex: 1;
+  font-size: 18px;
+  margin-bottom: 10px;
 }

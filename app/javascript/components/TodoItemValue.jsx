@@ -1,7 +1,7 @@
 import React from "react";
 
-import Button from "./nes/Button";
 import Checkbox from "./nes/Checkbox";
+import EditValue from "./shared/EditValue";
 
 const TodoItemValue = props => {
   const {
@@ -18,36 +18,19 @@ const TodoItemValue = props => {
   let valueElement = null;
   if (isEdit) {
     valueElement = (
-      <div className="edit-value-container">
-        <input
-          type="text"
-          name="value"
-          className="nes-input"
-          value={value}
-          onChange={event => {
-            editTodoItem(todoListId, id, {
-              value: event.target.value
-            });
-          }}
-          onKeyPress={event => {
-            if (event.key === "Enter") {
-              saveItem(event.target.name, value, () => {
-                toggleEditItem();
-              });
-            }
-          }}
-        />
-        <Button
-          variant="success"
-          name="value"
-          onClick={event =>
-            saveItem(event.target.name, value, () => {
-              toggleEditItem();
-            })
-          }>
-          Save
-        </Button>
-      </div>
+      <EditValue
+        value={value}
+        onInputChange={event => {
+          editTodoItem(todoListId, id, {
+            value: event.target.value
+          });
+        }}
+        onSave={event => {
+          saveItem(event.target.name, value, () => {
+            toggleEditItem();
+          });
+        }}
+      />
     );
   } else {
     valueElement = (
